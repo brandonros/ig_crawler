@@ -55,7 +55,7 @@ request_module.delay_request = function (path, parameters) {
 	return (current_request || Promise.resolve()).then(function() {
 		current_request = Promise.delay(rate)
 			.then(function () {
-				return request_module.https_request(path, parameters)
+				return request_module.https_request(path, parameters);
 			});
 
 		return current_request;
@@ -66,7 +66,7 @@ request_module.request = function (path, parameters) {
 	return cache.get(path, parameters)
 		.then(function (res) {
 			if (res === null) {
-				return request_module.delay_request(path, parameters)
+				return request_module.delay_request(path, parameters);
 			}
 
 			return res;

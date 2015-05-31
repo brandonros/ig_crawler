@@ -37,12 +37,12 @@ relationships_module.get = function (user_id, client_id, type, next_cursor, rela
 				relationship_res['data'][i] = res[i];
 			}
 
-			relationships = relationships.concat(relationship_res['data'])
+			relationships = relationships.concat(relationship_res['data']);
 
 			if (next_cursor !== undefined) {
-				return relationships_module.get(user_id, client_id, type, next_cursor, relationships)
+				return relationships_module.get(user_id, client_id, type, next_cursor, relationships);
 			}
 
 			return relationships;
-		})
-}
+		});
+};

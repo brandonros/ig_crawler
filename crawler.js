@@ -7,6 +7,10 @@ var relationships = require('./relationships.js');
 var users = require('./users.js');
 var media = require('./media.js');
 
+Promise.onPossiblyUnhandledRejection = function (err) {
+	console.error(err.message, err.stack);
+};
+
 function crawl_user(user_name, client_id) {
 	return users.search(user_name, client_id)
 		.then(function (user_id) {
@@ -24,17 +28,13 @@ function crawl_user(user_name, client_id) {
 
 			fs.writeFileSync(user_name + '_comments.json', JSON.stringify(comments));
 			fs.writeFileSync(user_name + '_follows.json', JSON.stringify(follows));
-		})
+		});
 }
 
 if (process['argv'].length !== 4) {
 	console.error('usage: comment_crawler username client_id');
 	
 	process.exit(1);
-}
-
-Promise.onPossiblyUnhandledRejection = function (err) {
-	console.error(err.message, err.stack);
 }
 
 var user_name = process['argv'][2];

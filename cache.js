@@ -18,9 +18,9 @@ cache.get = function (path, parameters) {
 			else {
 				resolve(JSON.parse(reply));
 			}
-		})
-	})
-}
+		});
+	});
+};
 
 cache.set = function (path, parameters, buf) {
 	delete parameters['client_id'];
@@ -28,4 +28,4 @@ cache.set = function (path, parameters, buf) {
 	var key = path + '?' + querystring.stringify(parameters);
 
 	redis.set(key, buf);
-}
+};
