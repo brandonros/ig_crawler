@@ -37,13 +37,7 @@ request_module.https_request = function (path, parameters, client_id) {
 					var data = JSON.parse(buf);
 					
 					if (data['code'] === 429) {
-						Promise.delay(rate)
-						.then(function () {
-							return request_module.https_request(path, parameters, client_id)
-						})
-						.then(function (res) {
-							resolve(res);
-						});
+						throw new Error('rate limited');
 					}
 
 					else {

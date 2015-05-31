@@ -61,8 +61,8 @@ var follows = JSON.parse(fs.readFileSync(filename)).filter(function (follow) {
 });
 
 follows.sort(function (a, b) {
-	return a['counts']['media'] - b['counts']['media']
-})
+	return a['counts']['media'] - b['counts']['media'];
+});
 
 crawl_follows(follows, 0, client_id)
 .then(function () {
