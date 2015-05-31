@@ -9,7 +9,7 @@ comments.get = function (media, client_id) {
 		return Promise.resolve(media['comments']['data']);
 	}
 
-	return request_module.request('/v1/media/' + media['id'] + '/comments')
+	return request_module.request('/v1/media/' + media['id'] + '/comments', client_id)
 		.then(function (res) {
 			return res['data'];
 		});

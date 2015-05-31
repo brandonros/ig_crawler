@@ -19,7 +19,7 @@ relationships_module.get = function (user_id, client_id, type, next_cursor, rela
 		parameters['cursor'] = next_cursor;
 	}
  
-	return request_module.request(path, parameters)
+	return request_module.request(path, parameters, client_id)
 		.then(function (res) {
 			if (res['meta']['code'] !== 200) {
 				throw new Error('bad meta');

@@ -5,7 +5,7 @@ var request_module = require('./request.js');
 var users_module = module.exports;
 
 users_module.search = function (user_name, client_id) {
-	return request_module.request('/v1/users/search/', { q: user_name })
+	return request_module.request('/v1/users/search/', { q: user_name }, client_id)
 		.then(function (res) {
 			var user_id;
 
@@ -25,13 +25,12 @@ users_module.search = function (user_name, client_id) {
 };
 
 users_module.get = function (user_id, client_id) {
-	return request_module.request('/v1/users/' + user_id, {})
+	return request_module.request('/v1/users/' + user_id, {}, client_id)
 		.then(function (res) {
 			if (res['meta']['code'] === 400) {
-				return null;
+				return null; /* private account */
 			}
 
 			return res['data'];
 		});
 };
-

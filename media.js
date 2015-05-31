@@ -21,7 +21,7 @@ media_module.get = function (user_id, client_id, next_max_id, media) {
 
 	var media_res;
  
-	return request_module.request(path, parameters)
+	return request_module.request(path, parameters, client_id)
 		.then(function (res) {
 			if (res['meta']['code'] !== 200) {
 				throw new Error('bad meta');
