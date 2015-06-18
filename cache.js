@@ -5,11 +5,20 @@ var querystring = require('querystring');
 var cache = module.exports;
 
 cache.get = function (path, parameters) {
+	var key = path;
+
+	if (parameters === undefined) {
+		parameters = {};
+	}
+
+	delete parameters['client_id'];
+	delete parameters['access_token'];
+
+	if (Object.keys(parameters) !== 0) {
+		key += '?' + querystring.stringify(parameters);
+	}
+
 	return new Promise(function (resolve, reject) {
-		delete parameters['client_id'];
-
-		var key = path + '?' + querystring.stringify(parameters);
-
 		redis.get(key, function (err, reply) {
 			if (err) {
 				reject(err);
@@ -23,9 +32,28 @@ cache.get = function (path, parameters) {
 };
 
 cache.set = function (path, parameters, buf) {
+	var key = path;
+	
+	if (parameters === undefined) {
+		parameters = {};
+	}
+
 	delete parameters['client_id'];
+	delete parameters['access_token'];
 
-	var key = path + '?' + querystring.stringify(parameters);
+	if (Object.keys(parameters) !== 0) {
+		key += '?' + querystring.stringify(parameters);
+	}
 
-	redis.set(key, buf);
+	return new Promise(function (resolve, reject) {
+		redis.set(key, buf, function (err, reply) {
+			if (err) {
+				reject(err);
+			}
+
+			else {
+				resolve(reply);
+			}
+		});
+	});
 };
